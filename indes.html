@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formulário de conhecimento</title>
+  <!-- Fonte mão do Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('fundo.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #333;
+    }
+    /* Título estilo mão */
+    header {
+      text-align: center;
+      padding: 30px 10px 10px 10px;
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8rem;
+      color: #000000;  /* cor preta */
+      text-shadow:
+        1px 1px 2px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+    .main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px 40px 40px 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      width: 65%;
+    }
+    .form-container h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      width: 100%;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .image-column {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      width: 30%;
+      max-height: 650px;
+      overflow-y: auto;
+      padding-left: 20px;
+    }
+    .image-column img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .image-column img:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: white;
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.6);
+      /* position: fixed; Removido para não cobrir conteúdo */
+      /* width: 100%; */
+      /* bottom: 0; */
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .instagram-icon {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+    .services-link svg {
+      width: 20px;
+      height: 20px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    .overlay {
+      position: fixed;
+      display: none;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      cursor: pointer;
+    }
+    .overlay img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+    @media (max-width: 900px) {
+      .main {
+        flex-direction: column;
+        align-items: center;
+      }
+      .form-container, .image-column {
+        width: 100%;
+      }
+      .image-column {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-height: none;
+        padding-left: 0;
+        margin-top: 20px;
+      }
+      .image-column img {
+        margin: 5px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+      }
+      footer {
+        gap: 20px;
+      }
+    }
+    #popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 10000;
+
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #popup img {
+      max-width: 200px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px white;
+    }
+    #popup button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    #popup button:hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Michel o Celebrante / Assessor
+  </header>
+
+  <div class="main">
+    <div class="form-container" id="form-container">
+      <h2>Preciso de algumas informações sobre seu evento</h2>
+      <form 
+        id="form" 
+        action="https://docs.google.com/forms/d/e/1FAIpQLSe83C1Q228Q2B7tlMtCRcLCH3b2ubsCC-NJKVV-iSIpq2RlQA/formResponse" 
+        method="POST" 
+        target="hidden_iframe"
+      >
+        <label>Tipo de Evento</label>
+        <input type="text" name="entry.2005620554" required />
+        <label>Seu Nome "se for casamento" o Nome do Conjuge Também</label>
+        <input type="text" name="entry.1045781291" required />
+        <label>Data do Evento</label>
+        <input type="text" name="entry.1607441498" required />
+        <label>Local do evento</label>
+        <input type="text" name="entry.1065046570" required />
+        <label>Se indicação, informe quem indicou</label>
+        <input type="text" name="entry.839337160" required />
+        <label>Fale um pouquinho sobre o que você espera do seu evento.</label>
+        <input type="text" name="entry.1166974658" required />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+
+    <div class="image-column">
+      <img src="1.jpg" alt="Imagem 1" />
+      <img src="2.jpg" alt="Imagem 2" />
+      <img src="3.jpg" alt="Imagem 3" />
+      <img src="4.jpg" alt="Imagem 4" />
+      <img src="5.jpg" alt="Imagem 5" />
+      <img src="6.jpg" alt="Imagem 6" />
+      <img src="7.jpg" alt="Imagem 7" />
+      <img src="8.jpg" alt="Imagem 8" />
+      <img src="9.jpg" alt="Imagem 9" />
+      <img src="10.jpg" alt="Imagem 10" />
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <img src="" id="overlay-img" alt="Imagem ampliada" />
+  </div>
+
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <div id="popup">
+    <img src="1.jpg" alt="WhatsApp" />
+    <p>Obrigado por preencher o formulário!<br>Entrarei em contato pelo WhatsApp em breve.</p>
+    <button id="closePopup">Fechar</button>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/mivaassessoriasp" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm4.25 3.25a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 1.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm4.75-.75a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25Z"/>
+      </svg>
+      @mivaassessoriasp
+    </a>
+
+    <a href="https://michelsaopaulo.github.io/SiteGeral/" target="_blank" rel="noopener" class="services-link" aria-label="Conheça nossos serviços">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link" style="vertical-align: middle;">
+        <path d="M10 13a5 5 0 0 0 7.07-7.07l-1.41-1.41a5 5 0 0 0-7.07 7.07"/>
+        <path d="M14 11a5 5 0 0 1-7.07 7.07l-1.41-1.41a5 5 0 0 1 7.07-7.07"/>
+      </svg>
+      Conheça nossos serviços
+    </a>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const overlay = document.getElementById('overlay');
+      const overlayImg = document.getElementById('overlay-img');
+      const images = document.querySelectorAll('.image-column img');
+
+      images.forEach(img => {
+        img.addEventListener('click', () => {
+          overlayImg.src = img.src;
+          overlay.style.display = 'flex';
+        });
+      });
+
+      overlay.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        overlayImg.src = '';
+      });
+
+      const form = document.getElementById('form');
+      const formContainer = document.getElementById('form-container');
+      const popup = document.getElementById('popup');
+      const closePopupBtn = document.getElementById('closePopup');
+
+      form.addEventListener('submit', (e) => {
+        // Popup só aparece após submissão do iframe para garantir envio do Google Forms.
+        // Como não conseguimos detectar com facilidade o submit do iframe, vamos mostrar popup após 2 segundos como exemplo.
+        setTimeout(() => {
+          popup.style.display = 'flex';
+          formContainer.style.filter = 'blur(3px)';
+        }, 2000);
+      });
+
+      closePopupBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+        formContainer.style.filter = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
+
